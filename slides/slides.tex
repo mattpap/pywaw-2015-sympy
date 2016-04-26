@@ -54,7 +54,7 @@
   \frametitle{Co to jest matematyka symboliczna?}
   \framesubtitle{}
 
-  Python operuje na liczbach zmiennoprzecinkowych (IEEE-754):
+  Python operuje na liczbach zmiennoprzecinkowych:
   \begin{python}
     In[1]: import math
     In[2]: math.sqrt(3)
@@ -62,7 +62,7 @@
   \begin{equation*}
     1.7320508075688772
   \end{equation*}
-
+  \pause
   W matematyce symbolicznej operujemy na liczbach i symbolach:
   \begin{python}
     In[3]: import sympy
@@ -257,7 +257,7 @@
         \item bez nowego środowiska, języka, \ldots
         \item bez rozszerzeń kompilowanych
         \item brak obligatoryjnych zależności (poza mpmath)
-        \item działa dowolnej platformie (\sout{Jython})
+        \item działa na dowolnej platformie (\sout{Jython})
       \end{itemize}
     \item prostota architektury
       \begin{itemize}
@@ -393,7 +393,7 @@
           \item jednostki miar (analiza wymiarowa)
           \item stałe fizyczne
           \item mechanika klasyczne (dynamika bryły sztywnej)
-          \item mechanika kwantowa (algebry Pauliego, algorytm Shora)
+          \item mechanika kwantowa
           \item optyka
         \end{itemize}
       \item \textbf{statystyka i rachunek prawdopodobieństwa}
@@ -426,21 +426,25 @@
 
   SymPy automatycznie stosuje podstawowe transformacje:
   \begin{python}
-    In[1]: 1 + x - y - y - x**2/x, exp(1), sin(0)
+    In[1]: from sympy import *
+    In[2]: var('x,y')
+  \end{python}
+  \begin{python}
+    In[3]: 1 + x - y - y - x**2/x, exp(1), sin(0)
   \end{python}
   \begin{equation*}
     \left ( - 2 y + 1, \quad e, \quad 0\right )
   \end{equation*}
   Zaawansowane transformacje aplikowane są manualnie:
   \begin{python}
-    In[2]: sin(x)**2 + cos(x)**2
+    In[4]: sin(x)**2 + cos(x)**2
   \end{python}
   \begin{equation*}
     \sin^{2}{\left (x \right )} + \cos^{2}{\left (x \right )}
   \end{equation*}
 
   \begin{python}
-    In[3]: simplify(_)
+    In[5]: simplify(_)
   \end{python}
   \begin{equation*}
     1
@@ -516,7 +520,7 @@
 
 \begin{frame}[fragile]
   \frametitle{Problemy i pułapki}
-  \framesubtitle{liczby Pythona vs. liczby SymPy}
+  \framesubtitle{Liczby Pythona vs. liczby SymPy}
 
   \begin{python}
     In[1]: 1/2
@@ -558,7 +562,7 @@
 
 \begin{frame}[fragile]
   \frametitle{Problemy i pułapki}
-  \framesubtitle{porównywanie wyrażeń}
+  \framesubtitle{Porównywanie wyrażeń}
 
   \begin{python}
     In[1]: (x + 1)**2 == x**2 + 2*x + 1
@@ -595,7 +599,7 @@
 
 \begin{frame}[fragile]
   \frametitle{Problemy i pułapki}
-  \framesubtitle{limit rekurencji i pamięć podręczna}
+  \framesubtitle{Limit rekurencji i pamięć podręczna}
 
   \begin{python}
     In[1]: from sympy.core.cache import clear_cache
