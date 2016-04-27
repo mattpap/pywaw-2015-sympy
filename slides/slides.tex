@@ -26,10 +26,9 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 
-\usetikzlibrary{arrows}
-\usetikzlibrary{automata}
-\usetikzlibrary{backgrounds}
-\usetikzlibrary{decorations}
+\usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,
+  decorations.pathreplacing,decorations.pathmorphing,shapes,
+  matrix,shapes.symbols}
 
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -632,6 +631,59 @@
     In[8]: clear_cache(); horner_poly(143).subs(x, 1)
     RuntimeError: maximum recursion depth exceeded
   \end{python}
+\end{frame}
+
+\tikzset{
+  >=stealth',
+  elem/.style={
+    rectangle,
+    rounded corners,
+    % fill=black!10,
+    draw=black, thick,
+    text width=10em,
+    minimum height=2em,
+    text centered,
+    on chain},
+  line/.style={draw, thick, <-},
+  element/.style={
+    tape,
+    top color=white,
+    bottom color=blue!50!black!60!,
+    minimum width=8em,
+    draw=blue!40!black!90, very thick,
+    text width=10em,
+    minimum height=3.5em,
+    text centered,
+    on chain},
+  every join/.style={->, thick,shorten >=1pt},
+}
+
+\begin{frame}[fragile]
+  \frametitle{Algebra komputerowa od wewnątrz}
+  \framesubtitle{Na przykładzie rozkładu na czynniki pierwsze}
+
+  \begin{center}
+  \begin{tikzpicture}
+    [node distance=.6cm, start chain=going below]
+    \node[elem, join] (1) {$factor(x^2 - 2y^2, \sqrt{2})$};
+    \node[elem, join] (2) {Trager: $\sqrt{2}[x, y]$};
+      \begin{scope}[start branch]
+        \node[elem, on chain=going right, join=by {<-}] (21) {PRS};
+      \end{scope}
+    \node[elem, join] (3) {Wang: $\mathrm{Z}[x, y]$};
+      \begin{scope}[start branch]
+        \node[elem, on chain=going right, join=by {<-}] (31) {\ldots};
+      \end{scope}
+    \node[elem, join] (4) {Zassenhaus: $\mathrm{Z}[x]$};
+      \begin{scope}[start branch]
+        \node[elem, on chain=going right, join=by {<-}] (41) {liczby pierwsze};
+      \end{scope}
+    \node[elem, join] (5) {Berlekamp: $GF(p)[x]$};
+      \begin{scope}[start branch]
+        \node[elem, on chain=going right, join=by {<-}] (51) {macierze};
+      \end{scope}
+  \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \begin{frame}[fragile]
